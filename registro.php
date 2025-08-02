@@ -1,21 +1,19 @@
 <?php
+header('Content-Type: application/json');
 require 'config.php';
 
-if ($_POST) {
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+$data = json_decode(file_get_contents('php://input'), true);
 
-    $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)");
-    $stmt->execute([$nome, $email, $senha]);
+$nome = $data['nome'] ?? '';
+$email = $data['email'] ?? '';
+$senha = password_hash($data['senha'] ?? '', PASSWORD_DEFAULT);
 
-    echo "Usuário cadastrado!";
+$stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)");
+$success = $stmt->execute([$nome, $email, $senha]);
+
+if ($success) {
+    echo json_encode(['success' => true]);
+} else {
+    echo json_encode(['success' => false, 'message' => 'Erro ao registrar']);
 }
 ?>
-
-<form method="post">
-  Nome: <input type="text" name="nome"><br>
-  Email: <input type="email" name="email"><br>
-  Senha: <input type="password" name="senha"><br>
-  <button type="submit">Registrar</button>
-</form>
