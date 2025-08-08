@@ -25,5 +25,5 @@ $stmt = $conexao->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (?, 
 $stmt->bind_param("sss", $nome, $email, $senhaCriptografada);
 $stmt->execute();
 
-echo "Usuário cadastrado com sucesso!";
+
 ?>
