@@ -1,22 +1,27 @@
-
 <?php
-header('Content-Type: application/json');
 session_start();
 require 'config.php';
 
-$data = json_decode(file_get_contents('php://input'), true);
+if ($_POST) {
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
 
-$email = $data['email'] ?? '';
-$senha = $data['senha'] ?? '';
+    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");
-$stmt->execute([$email]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if ($user && password_verify($senha, $user['senha'])) {
-    $_SESSION['usuario'] = $user;
-    echo json_encode(['success' => true, 'nome' => $user['nome']]);
-} else {
-    echo json_encode(['success' => false, 'message' => 'Login inválido']);
+    if ($user && password_verify($senha, $user['senha'])) {
+        $_SESSION['usuario'] = $user;
+        header("Location: index.php");
+        exit;
+    } else {
+        echo "Login inválido";
+    }
 }
 ?>
+
+<form method="post">
+  Email: <input type="email" name="email"><br>
+  Senha: <input type="password" name="senha"><br>
+  <button type="submit">Entrar</button>
+</form>
