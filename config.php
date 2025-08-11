@@ -1,8 +1,8 @@
 <?php
-$host = 'baseapp.mysql.uhserver.com'; // ou IP/URL do servidor, ex: 'tccappionic-bd.mysql.uhserver.com'
-$usuario = 'user_baseapp';
-$senha = ',,,Pass2025,,,';
-$banco = 'baseapp';
+$host = ''; // ou IP/URL do servidor, ex: 'tccappionic-bd.mysql.uhserver.com'
+$usuario = '';
+$senha = '';
+$banco = '';
 
 $conexao = new mysqli($host, $usuario, $senha, $banco);
 
