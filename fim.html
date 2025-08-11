@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Exemplos de JS</title>
   <style>
-  
     body, html {
       height: 100%;
       margin: 0;
@@ -16,7 +15,6 @@
       font-family: Arial, sans-serif;
     }
 
- 
     #imagemFinal {
       display: none;
       width: 100vw;
@@ -27,6 +25,28 @@
       left: 0;
       background: black;
       z-index: 9999;
+    }
+
+    /* Botão ver codigo fonte*/
+    #btnCodigoFonte {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 18px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 10000;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+      font-family: Arial, sans-serif;
+    }
+    #btnCodigoFonte:hover {
+      background-color: #1e7e34;
     }
 
     #popupConfirm {
@@ -79,8 +99,9 @@
   <button id="btnFinalizar">Finalizar Apresentação</button>
 
   <img id="imagemFinal" src="https://picsum.photos/1920/1080" alt="Imagem Final" />
+  <button id="btnCodigoFonte">Ver Código Fonte</button>
 
-
+  <!-- Popup -->
   <div id="popupConfirm">
     <div class="popup-content">
       <p>Fim da Apresentação. Clique em OK para continuar.</p>
@@ -90,8 +111,14 @@
   </div>
 
 <script>
-
   const botao = document.getElementById('btnFinalizar');
+  const popup = document.getElementById('popupConfirm');
+  const btnOk = document.getElementById('btnOk');
+  const btnCancel = document.getElementById('btnCancel');
+  const imagem = document.getElementById('imagemFinal');
+  const btnCodigoFonte = document.getElementById('btnCodigoFonte');
+
+  //Estilo do botão inicial
   botao.style.padding = '12px 25px';
   botao.style.fontSize = '18px';
   botao.style.backgroundColor = '#007BFF';
@@ -103,23 +130,24 @@
   botao.onmouseover = () => botao.style.backgroundColor = '#0056b3';
   botao.onmouseout = () => botao.style.backgroundColor = '#007BFF';
 
-
-  const popup = document.getElementById('popupConfirm');
-  const btnOk = document.getElementById('btnOk');
-  const btnCancel = document.getElementById('btnCancel');
-  const imagem = document.getElementById('imagemFinal');
-
   botao.onclick = () => {
-    popup.style.display = 'flex'; 
+    popup.style.display = 'flex';
   };
 
   btnOk.onclick = () => {
     popup.style.display = 'none';
-    imagem.style.display = 'block'; 
+    imagem.style.display = 'block';
+    btnCodigoFonte.style.display = 'block';
   };
 
   btnCancel.onclick = () => {
-    popup.style.display = 'none'; 
+    popup.style.display = 'none';
+  };
+
+  //Ver Código Fonte
+  btnCodigoFonte.onclick = () => {
+
+    window.open('https://github.com/usuario/repositorio', '_blank');
   };
 </script>
 
