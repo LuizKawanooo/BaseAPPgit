@@ -1,155 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Exemplos de JS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Obrigado</title>
   <style>
-    body, html {
-      height: 100%;
-      margin: 0;
-      display: flex;
-      justify-content: center;  
-      align-items: center;      
-      background: #f0f0f0;
+    body {
       font-family: Arial, sans-serif;
-    }
-
-    #imagemFinal {
-      display: none;
-      width: 100vw;
-      height: 100vh;
-      object-fit: contain;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: black;
-      z-index: 9999;
-    }
-
-    /* Botão ver codigo fonte*/
-    #btnCodigoFonte {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 10px 18px;
-      font-size: 16px;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 10000;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: background-color 0.3s ease;
-      font-family: Arial, sans-serif;
-    }
-    #btnCodigoFonte:hover {
-      background-color: #1e7e34;
-    }
-
-    #popupConfirm {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 10000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #popupConfirm .popup-content {
-      background: white;
-      padding: 20px 30px;
-      border-radius: 8px;
+      background-color: white;
       text-align: center;
-      max-width: 300px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      font-family: Arial, sans-serif;
+      padding-top: 50px;
     }
-
-    #popupConfirm button {
-      margin: 10px 15px 0 15px;
-      padding: 8px 20px;
+    h1 {
+      font-size: 48px;
+      margin-bottom: 40px;
+    }
+    #nomes {
+      font-size: 24px;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
       font-size: 16px;
-      border: none;
-      border-radius: 4px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
-    #btnOk {
-      background-color: #4CAF50;
-      color: white;
-    }
-    #btnOk:hover {
-      background-color: #45a049;
-    }
-    #btnCancel {
-      background-color: #f44336;
-      color: white;
-    }
-    #btnCancel:hover {
-      background-color: #da190b;
+    pre {
+      text-align: left;
+      background: #f0f0f0;
+      padding: 10px;
+      margin-top: 20px;
+      display: none;
+      overflow-x: auto;
     }
   </style>
 </head>
 <body>
+  <h1>Obrigado!</h1>
+  <div id="nomes"></div>
+  <button onclick="mostrarCodigo()">Ver JavaScript</button>
+  <pre id="codigo"></pre>
 
-  <button id="btnFinalizar">Finalizar Apresentação</button>
+  <script>
+    const nomes = [
+      'EDSON OLIVEIRA',
+      'FABIANO BARBIR',
+      'LUIZ CAVANO',
+      'THIAGO SILVA'
+    ];
 
-  <img id="imagemFinal" src="https://raw.githubusercontent.com/LuizKawanooo/BaseAPPgit/refs/heads/main/95604260db44f885b1e3223f01a57b27-9.jpg" alt="Imagem Final" />
-  <button id="btnCodigoFonte">Ver Código Fonte</button>
+    const nomesDiv = document.getElementById('nomes');
+    let texto = nomes.join(' • ');
+    let pos = nomesDiv.offsetWidth;
 
-  <!-- Popup -->
-  <div id="popupConfirm">
-    <div class="popup-content">
-      <p>Fim da Apresentação. Clique em OK para continuar.</p>
-      <button id="btnOk">OK</button>
-      <button id="btnCancel">Cancelar</button>
-    </div>
-  </div>
+    function animarNomes() {
+      nomesDiv.style.transform = `translateX(${pos}px)`;
+      pos--;
+      if (pos < -nomesDiv.scrollWidth) {
+        pos = window.innerWidth;
+      }
+      requestAnimationFrame(animarNomes);
+    }
 
-<script>
-  const botao = document.getElementById('btnFinalizar');
-  const popup = document.getElementById('popupConfirm');
-  const btnOk = document.getElementById('btnOk');
-  const btnCancel = document.getElementById('btnCancel');
-  const imagem = document.getElementById('imagemFinal');
-  const btnCodigoFonte = document.getElementById('btnCodigoFonte');
+    nomesDiv.textContent = texto;
+    animarNomes();
 
-  //Estilo do botão inicial
-  botao.style.padding = '12px 25px';
-  botao.style.fontSize = '18px';
-  botao.style.backgroundColor = '#eb4034';
-  botao.style.color = 'white';
-  botao.style.border = 'none';
-  botao.style.borderRadius = '8px';
-  botao.style.cursor = 'pointer';
-  botao.style.transition = 'background-color 0.3s ease';
-  botao.onmouseover = () => botao.style.backgroundColor = '#0056b3';
-  botao.onmouseout = () => botao.style.backgroundColor = '#007BFF';
-
-  botao.onclick = () => {
-    popup.style.display = 'flex';
-  };
-
-  btnOk.onclick = () => {
-    popup.style.display = 'none';
-    imagem.style.display = 'block';
-    btnCodigoFonte.style.display = 'block';
-  };
-
-  btnCancel.onclick = () => {
-    popup.style.display = 'none';
-  };
-
-  //Ver Código Fonte
-  btnCodigoFonte.onclick = () => {
-
-    window.open('https://github.com/LuizKawanooo/BaseAPPgit/blob/36801fbce3ae2fe2f247df6edc8fed9d90cae402/fim.html', '_blank');
-  };
-</script>
-
+    function mostrarCodigo() {
+      const codigoJS = `const nomes = [\n  'EDSON OLIVEIRA',\n  'FABIANO BARBIR',\n  'LUIZ CAVANO',\n  'THIAGO SILVA'\n];\n\nconst nomesDiv = document.getElementById('nomes');\nlet texto = nomes.join(' • ');\nlet pos = nomesDiv.offsetWidth;\n\nfunction animarNomes() {\n  nomesDiv.style.transform = \`translateX(\${pos}px)\`;\n  pos--;\n  if (pos < -nomesDiv.scrollWidth) {\n    pos = window.innerWidth;\n  }\n  requestAnimationFrame(animarNomes);\n}\n\nnomesDiv.textContent = texto;\nanimarNomes();`;
+      const pre = document.getElementById('codigo');
+      pre.textContent = codigoJS;
+      pre.style.display = pre.style.display === 'none' ? 'block' : 'none';
+    }
+  </script>
 </body>
 </html>
