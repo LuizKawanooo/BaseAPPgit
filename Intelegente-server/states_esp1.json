@@ -3,12 +3,26 @@ $esp = $_POST['esp'] ?? '';
 $key = $_POST['key'] ?? '';
 $payload = $_POST['payload'] ?? '';
 
+// Verifica chave
 if ($key !== "luiz2025john2020g55667traçosvaga") {
-  http_response_code(403);
-  exit("INVALID KEY");
+    http_response_code(403);
+    exit("INVALID KEY");
 }
 
+// Limpa caracteres inválidos do JSON (como <br> ou pontos extras)
+$payload = str_replace(["\r", "\n", "<br>"], '', $payload);
+$payload = trim($payload);
+
+// Decodifica para validar se é JSON válido
+$json = json_decode($payload, true);
+if ($json === null && json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(400);
+    exit("INVALID JSON");
+}
+
+// Salva em arquivo
 $file = "states_".$esp.".json";
-file_put_contents($file, $payload);
+file_put_contents($file, json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
 echo "OK";
+?>
