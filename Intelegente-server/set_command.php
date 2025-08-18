@@ -15,7 +15,9 @@ $commandsFile = __DIR__ . "/commands.txt";
 
 // grava comando
 if ($name && $action) {
-    $cmd = $esp."|".$name."=".$action; // adiciona ESP para multi-ESP
+    $cmd = $esp."|".$name."=".$action;
+    file_put_contents($commandsFile, $cmd."\n", FILE_APPEND | LOCK_EX);
+
     if (file_put_contents($commandsFile, $cmd."\n", FILE_APPEND | LOCK_EX) === false) {
         http_response_code(500);
         exit("FAILED TO WRITE");
@@ -25,3 +27,4 @@ if ($name && $action) {
     echo "NO CMD";
 }
 ?>
+
