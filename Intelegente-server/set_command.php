@@ -1,24 +1,19 @@
 <?php
-require_once __DIR__.'/config.php';
+$esp = $_GET['esp'] ?? '';
+$key = $_GET['key'] ?? '';
+$name = $_GET['name'] ?? '';
+$action = $_GET['action'] ?? '';
 
-// Params: key, esp, name, action (ON|OFF)
-$esp    = isset($_GET['esp'])    ? trim($_GET['esp'])    : '';
-$key    = isset($_GET['key'])    ? $_GET['key']          : '';
-$name   = isset($_GET['name'])   ? trim($_GET['name'])   : '';
-$action = isset($_GET['action']) ? strtoupper($_GET['action']) : '';
-
-check_key_and_esp($esp, $key);
-
-if ($name === '' || ($action !== 'ON' && $action !== 'OFF')) {
-  http_response_code(400); echo "Parâmetros inválidos"; exit;
+if ($key !== "luiz2025john2020g55667traçosvaga") {
+  http_response_code(403);
+  exit("INVALID KEY");
 }
 
-$line = $name.'='.$action."\n";
-$file = queue_file($esp);
-
-if (!file_put_contents($file, $line, FILE_APPEND)) {
-  http_response_code(500); echo "Erro ao gravar comando";
-  exit;
+$commandsFile = "commands.txt";
+if ($name && $action) {
+  $cmd = $name."=".$action;
+  file_put_contents($commandsFile, $cmd."\n", FILE_APPEND);
+  echo "OK";
+} else {
+  echo "NO CMD";
 }
-header('Content-Type: application/json');
-echo json_encode(['ok'=>true,'queued'=>$line]);
