@@ -1,0 +1,14 @@
+<?php
+$esp = $_POST['esp'] ?? '';
+$key = $_POST['key'] ?? '';
+$payload = $_POST['payload'] ?? '';
+
+if ($key !== "luiz2025john2020g55667traçosvaga") {
+  http_response_code(403);
+  exit("INVALID KEY");
+}
+
+$file = "states_".$esp.".json";
+file_put_contents($file, $payload);
+
+echo "OK";
