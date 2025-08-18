@@ -4,7 +4,12 @@ require_once __DIR__.'/config.php';
 // ESP envia: POST esp, key, payload (JSON com { "LED1":1, "RELAY2":0, ... })
 $esp     = isset($_POST['esp']) ? trim($_POST['esp']) : '';
 $key     = isset($_POST['key']) ? $_POST['key']       : '';
-$payload = isset($_POST['payload']) ? $_POST['payload'] : '';
+$payload = str_replace(["\r", "\n", "<br>"], '', $payload);
+$json = json_decode($payload, true);
+if ($json === null && json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(400);
+    exit("INVALID JSON");
+}
 
 check_key_and_esp($esp, $key);
 
@@ -27,3 +32,4 @@ if (!file_put_contents($file, json_encode($wrap, JSON_PRETTY_PRINT|JSON_UNESCAPE
 
 header('Content-Type: application/json');
 echo json_encode(['ok'=>true]);
+
