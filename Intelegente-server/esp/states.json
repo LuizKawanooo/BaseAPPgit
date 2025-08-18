@@ -1,0 +1,14 @@
+{
+  "esp1": {
+    "LED1": 0,
+    "LED2": 0,
+    "LED3": 0,
+    "LED4": 0,
+    "LED5": 0,
+    "RELAY1": 0,
+    "RELAY2": 0,
+    "RELAY3": 0,
+    "RELAY4": 0,
+    "RELAY5": 0
+  }
+}
