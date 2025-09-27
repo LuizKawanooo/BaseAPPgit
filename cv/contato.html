@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Pagina Contatos">
+
+  <title>Contato</title>
+  <link rel="stylesheet" href="styleContato.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Voltar à Página Principal</a>
+    </nav>
+    <h1>Formulário de Contato</h1>
+  </header>
+  <br>
+  <main>
+    <form>
+      <fieldset>
+        <legend>Dados Pessoais</legend>
+        <label>Nome: <input type="text" name="nome" required></label><br>
+        <label>Email: <input type="email" name="email" required></label><br>
+        <label>Idade: <input type="number" name="idade" required></label><br>
+        <label>Telefone: <input type="tel" name="telefone" required></label><br>
+        <label>Data de nascimento: <input type="date" name="nascimento"></label><br>
+        <label>Sexo:
+          <select name="sexo">
+            <option>Masculino</option>
+            <option>Feminino</option>
+          </select>
+        </label><br>
+        <label>Estado civil: <input type="text" name="estadoCivil"></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Dados da Empresa</legend>
+        <label>CNPJ: <input type="text" name="cnpj"></label><br>
+        <label>Razão Social: <input type="text" name="razaoSocial"></label><br>
+        <label>Ramo de atuação: <input type="text" name="ramo"></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Endereço</legend>
+        <label>CEP: <input type="text" name="cep" required></label><br>
+        <label>Tipo de logradouro:
+          <select name="tipoLogradouro">
+            <option>Rua</option>
+            <option>Avenida</option>
+            <option>Praça</option>
+          </select>
+        </label><br>
+        <label>Logradouro: <input type="text" name="logradouro" required></label><br>
+        <label>Cidade: <input type="text" name="cidade" required></label><br>
+        <label>Estado: <input type="text" name="estado" required></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Descrição detalhada do interesse</legend>
+        <textarea name="descricao" rows="5" cols="40"
+          placeholder="Duvidas ou sugentões, entre em contato..!"></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>Outros</legend>
+        <p><strong>Aceite os termos:</strong></p>
+        <label><input type="checkbox" name="opcao1"> Receber newsletter</label><br>
+        <label><input type="checkbox" name="opcao2"> Aceito os termos</label><br>
+        <label><input type="checkbox" name="opcao3"> Quero ser contatado por telefone</label><br>
+        <label><input type="checkbox" name="opcao4"> Quero ser contatado por e-mail</label><br><br>
+
+        <p><strong>Preferência de contato:</strong></p>
+        <label><input type="radio" name="contato" value="email"> E-mail</label><br>
+        <label><input type="radio" name="contato" value="telefone"> Telefone</label><br>
+        <label><input type="radio" name="contato" value="whatsapp"> WhatsApp</label><br>
+      </fieldset>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; Fatec 2025 - Desenvolvimento de Software Multiplataforma</p>
+  </footer>
+
+</body>
+
+</html>

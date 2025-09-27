@@ -1,0 +1,149 @@
+/* seleção de texto */
+::selection {
+    background: #004080;
+    color: #ffffff;
+}
+
+/* reset e tudo */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* body */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #0f0d11;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* header */
+header {
+    background: #004080;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    height: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+header nav a {
+    color: #86c87c;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* main */
+main {
+    flex: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* formulário */
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+fieldset {
+    border: 2px solid #004080;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-weight: bold;
+    color: #004080;
+    padding: 0 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #0f0d11;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+button[type="submit"] {
+    background-color: #004080;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button[type="submit"]:hover {
+    background-color: #003366;
+    transform: translateY(-2px);
+}
+
+/* rodapé */
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #004080;
+    color: white;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* responsividade */
+@media (max-width: 600px) {
+    header {
+        height: auto;
+        padding: 15px;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+    }
+}
