@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    background-color: #f0f2f5;
+ }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #020202;
+  padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);   
+
+
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+
+.navbar-logo img {
+  height: 50px;
+}
+
+.cart-icon, .user-icon {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nav-item {
+  text-decoration: none;
+}
+
+
+.nav-item:hover {
+    color: #007bff; 
+}
+
+
+#principal {
+    text-align: center;
+    color: #000000;
+    font-family: "Staatliches", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}

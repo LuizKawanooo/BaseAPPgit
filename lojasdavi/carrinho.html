@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Meu Carrinho</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .produto {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .produto img {
+      width: 80px;
+      border-radius: 8px;
+    }
+    button {
+      background: #d00;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #a00;
+    }
+    #total {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🛒 Meu Carrinho</h1>
+  <div id="carrinho"></div>
+  <p id="total"></p>
+  <p style="text-align:center;"><a href="index.html">⬅️ Continuar comprando</a></p>
+
+  <script>
+    function getCookie(nome) {
+      const valor = `; ${document.cookie}`;
+      const partes = valor.split(`; ${nome}=`);
+      if (partes.length === 2) return JSON.parse(decodeURIComponent(partes.pop().split(';').shift()));
+      return [];
+    }
+
+    function setCookie(nome, valor) {
+      const expira = new Date();
+      expira.setDate(expira.getDate() + 1);
+      document.cookie = `${nome}=${encodeURIComponent(JSON.stringify(valor))}; expires=${expira.toUTCString()}; path=/`;
+    }
+
+    const carrinho = getCookie('carrinho');
+    const container = document.getElementById('carrinho');
+    const totalEl = document.getElementById('total');
+
+    if (carrinho.length === 0) {
+      container.innerHTML = '<p style="text-align:center;">Seu carrinho está vazio 🛒</p>';
+    } else {
+      let total = 0;
+      carrinho.forEach((produto, index) => {
+        total += produto.preco;
+        const item = document.createElement('div');
+        item.classList.add('produto');
+        item.innerHTML = `
+          <img src="${produto.imagem}" alt="${produto.nome}">
+          <div>
+            <h3>${produto.nome}</h3>
+            <p>R$ ${produto.preco.toFixed(2)}</p>
+            <button onclick="remover(${index})">Remover</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+      totalEl.textContent = `Total: R$ ${total.toFixed(2)}`;
+    }
+
+    function remover(index) {
+      let carrinho = getCookie('carrinho');
+      carrinho.splice(index, 1);
+      setCookie('carrinho', carrinho);
+      location.reload();
+    }
+  </script>
+
+</body>
+</html>

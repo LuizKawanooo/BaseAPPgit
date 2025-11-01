@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    .inputs {
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #3e3e3e;
+    }
+    .buttons {
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #b3a011;
+        color: white;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef2f3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    form {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1e7e34;
+    }
+  </style>
+</head>
+<body>
+  <form id="loginForm">
+    <h2>Entrar</h2>
+    <input class="inputs" type="email" id="email" placeholder="E-mail" required>
+    <input class="inputs" type="password" id="senha" placeholder="Senha" required>
+    <button class="buttons" type="submit">Login</button>
+      <p class="link-registro">
+    Ainda não tem conta?
+    <a href="cadastro.html">Cadastre-se aqui</a>
+  </p>
+  </form>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+  <script>
+    // 🔥 Configuração do Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyB9QqVbGYaLLqUD5LIXAwLXiTWtIrF-16k",
+    authDomain: "lojasdavi-78bb2.firebaseapp.com",
+    projectId: "lojasdavi-78bb2",
+    storageBucket: "lojasdavi-78bb2.firebasestorage.app",
+    messagingSenderId: "671422096205",
+    appId: "1:671422096205:web:ee41eb8af7856fd17a4d04"
+};
+    firebase.initializeApp(firebaseConfig);
+
+    const apiUrl = "php/";
+
+    async function fazerLogin(email, senha) {
+      try {
+        // 1️⃣ Autentica no Firebase
+        const cred = await firebase.auth().signInWithEmailAndPassword(email, senha);
+        const user = cred.user;
+
+        // 2️⃣ Busca os dados no MySQL
+        const response = await fetch(`${apiUrl}login.php`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          const u = data.user;
+          alert(`Bem-vindo, ${u.nome}! Tipo: ${u.tipo_usuario}`);
+          // Aqui você pode salvar em localStorage e redirecionar:
+          localStorage.setItem("user", JSON.stringify(u));
+          window.location.href = "index.html"; // ou a tela principal
+        } else {
+          alert("Usuário não encontrado no banco.");
+        }
+      } catch (error) {
+        alert("Erro ao logar: " + error.message);
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const senha = document.getElementById("senha").value.trim();
+      fazerLogin(email, senha);
+    });
+  </script>
+</body>
+</html>

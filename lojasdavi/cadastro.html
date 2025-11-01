@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastrar Usuário</title>
+  <style>
+
+    .inputs {
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #3e3e3e;
+    }
+    .buttons {
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #8db311;
+        color: white;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+    }
+
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    form {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <form id="cadastroForm">
+    <h2>Cadastro</h2>
+    <input type="text" id="nome" placeholder="Nome completo" required>
+    <input class="inputs" type="email" id="email" placeholder="E-mail" required>
+    <input class="inputs" type="password" id="senha" placeholder="Senha" required>
+    <button class="buttons" type="submit">Cadastrar</button>
+          <p class="link-registro">
+    Já tem conta?
+    <a href="login.html">Login aqui</a>
+  </p>
+  </form>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+  <script>
+    // 🔥 Configuração do Firebase (substitua pelos dados do seu projeto)
+const firebaseConfig = {
+    apiKey: "AIzaSyB9QqVbGYaLLqUD5LIXAwLXiTWtIrF-16k",
+    authDomain: "lojasdavi-78bb2.firebaseapp.com",
+    projectId: "lojasdavi-78bb2",
+    storageBucket: "lojasdavi-78bb2.firebasestorage.app",
+    messagingSenderId: "671422096205",
+    appId: "1:671422096205:web:ee41eb8af7856fd17a4d04"
+};
+    firebase.initializeApp(firebaseConfig);
+
+    const apiUrl = "php/";
+
+    async function cadastrarUsuario(nome, email, senha) {
+      try {
+        // 1️⃣ Cria no Firebase
+        const cred = await firebase.auth().createUserWithEmailAndPassword(email, senha);
+        const user = cred.user;
+
+        // 2️⃣ Salva no MySQL
+        const resposta = await fetch(`${apiUrl}register.php`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome, email, senha })
+        });
+        const resultado = await resposta.json();
+
+        alert(resultado.message || "Usuário cadastrado!");
+        document.getElementById("cadastroForm").reset();
+      } catch (error) {
+        alert("Erro: " + error.message);
+      }
+    }
+
+    document.getElementById("cadastroForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const senha = document.getElementById("senha").value.trim();
+      cadastrarUsuario(nome, email, senha);
+    });
+  </script>
+</body>
+</html>
