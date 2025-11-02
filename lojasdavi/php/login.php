@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tela de Login</title>
@@ -239,6 +240,7 @@ async function loginComGoogle() {
   </script>
 </body>
 </html>
+
 
 
 
