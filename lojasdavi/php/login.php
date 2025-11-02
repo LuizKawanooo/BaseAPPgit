@@ -174,7 +174,7 @@
     };
     firebase.initializeApp(firebaseConfig);
 
-    const apiUrl = "https://endologic.com.br/lojasdavi/php/";
+    const apiUrl = "https://endologic.com.br/lojasdavi/lojasdavi/php/";
 
     // 🔹 Login com e-mail e senha
     async function fazerLogin(email, senha) {
@@ -239,6 +239,7 @@ async function loginComGoogle() {
   </script>
 </body>
 </html>
+
 
 
 
