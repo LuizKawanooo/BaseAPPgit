@@ -9,8 +9,12 @@
   <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Staatliches&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Staatliches&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
   <style>
     .user-info {
       color: #333;
@@ -26,6 +30,14 @@
       font-weight: bold;
       cursor: pointer;
       margin-left: 10px;
+    }
+
+    .user-photo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #000;
     }
   </style>
 </head>
@@ -44,12 +56,9 @@
           <img src="img/car.jpg" alt="Carrinho" class="cart-icon">
         </a>
 
+        <!-- Área do usuário -->
         <div class="nav-item" id="user-section">
-          <a href="login.html">
-            <img src="img/user.jpg" alt="Usuário" class="user-icon">
-          </a>
-          <span class="user-info" id="user-info"></span>
-          <button class="logout-btn" id="logout-btn" style="display:none;">Sair</button>
+          <!-- Este conteúdo será trocado dinamicamente -->
         </div>
       </div>
     </nav>
@@ -76,24 +85,34 @@
   </main>
 
   <script>
-    // --- Mostrar usuário logado ---
-    const userInfoEl = document.getElementById('user-info');
-    const logoutBtn = document.getElementById('logout-btn');
-
+    const userSection = document.getElementById('user-section');
     const user = JSON.parse(localStorage.getItem('user'));
 
     if (user && user.email) {
-      userInfoEl.textContent = user.email;
-      logoutBtn.style.display = 'inline';
-    } else {
-      userInfoEl.textContent = '';
-      logoutBtn.style.display = 'none';
-    }
+      // Se estiver logado — mostra nome e botão de sair
+      const nome = user.nome || user.email.split('@')[0];
+      const foto = user.foto || "img/user.jpg";
 
-    logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('user');
-      window.location.href = 'login.html';
-    });
+      userSection.innerHTML = `
+        <div style="display:flex;align-items:center;gap:8px;">
+          <img src="${foto}" alt="Foto do usuário" class="user-photo">
+          <span class="user-info">${nome}</span>
+          <button class="logout-btn" id="logout-btn">Sair</button>
+        </div>
+      `;
+
+      document.getElementById('logout-btn').addEventListener('click', () => {
+        localStorage.removeItem('user');
+        window.location.reload();
+      });
+    } else {
+      // Se não estiver logado — mostra o botão de login
+      userSection.innerHTML = `
+        <a href="login.html">
+          <img src="img/user.jpg" alt="Login" class="user-icon">
+        </a>
+      `;
+    }
 
     // --- Sistema de carrinho com cookies ---
     function getCookie(nome) {
