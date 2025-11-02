@@ -201,42 +201,42 @@
       }
     }
 
-    // 🔹 Login com Google
-    async function loginComGoogle() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      try {
-        const result = await firebase.auth().signInWithPopup(provider);
-        const user = result.user;
+async function loginComGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  try {
+    const result = await firebase.auth().signInWithPopup(provider);
+    const user = result.user;
 
-        // 🔹 Verifica o usuário no MySQL
-        const response = await fetch(`${apiUrl}login.php`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: user.email })
-        });
-        const data = await response.json();
+    const response = await fetch(`${apiUrl}login.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: user.email })
+    });
 
-        if (data.success) {
-          alert(`Bem-vindo, ${data.user.nome}!`);
-          localStorage.setItem("user", JSON.stringify(data.user));
-          window.location.href = "index.html";
-        } else {
-          alert("Conta Google conectada, mas usuário não encontrado no banco.");
-        }
-      } catch (error) {
-        alert("Erro ao fazer login com Google: " + error.message);
-      }
+    const text = await response.text();
+    console.log("🔍 Resposta do servidor:", text);
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error("A resposta não é JSON. Caminho incorreto ou erro no PHP.");
     }
 
-    // Eventos
-    document.getElementById("loginForm").addEventListener("submit", e => {
-      e.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value.trim();
-      fazerLogin(email, senha);
-    });
+    if (data.success) {
+      alert(`Bem-vindo, ${data.user.nome}!`);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      window.location.href = "index.html";
+    } else {
+      alert("Conta Google conectada, mas usuário não encontrado no banco.");
+    }
+  } catch (error) {
+    alert("Erro ao fazer login com Google: " + error.message);
+  }
+}
 
     document.getElementById("googleLogin").addEventListener("click", loginComGoogle);
   </script>
 </body>
 </html>
+
